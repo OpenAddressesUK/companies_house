@@ -14,4 +14,5 @@ group :test, :development do
   gem 'webmock'
   gem 'pry'
   gem 'timecop'
+  gem 'simplecov'
 end
