@@ -1,0 +1,128 @@
+GIT
+  remote: git://github.com/OpenAddressesUK/openc-schema.git
+  revision: 84d8bc6c90acf2dd960e3c8bd0119646780ffab8
+  specs:
+    openc-schema (0.0.1)
+
+GIT
+  remote: git://github.com/OpenAddressesUK/turbot-api.git
+  revision: ef6667208978e9956526ab2987bcad275de8d1d0
+  specs:
+    turbot-api (0.0.16)
+      rest-client (~> 1.6.1)
+      rubyzip
+
+GIT
+  remote: git://github.com/OpenAddressesUK/turbot-client.git
+  revision: bfb76382111e2ed81206d4f9f849071bb6c7fd99
+  specs:
+    turbot (0.1.16)
+      activesupport (= 4.1.4)
+      excon
+      json-schema
+      launchy (>= 0.3.2)
+      netrc (~> 0.7.7)
+      rest-client (~> 1.6.1)
+      rubyzip (>= 1.0.0)
+      turbot-api (>= 0.0.14)
+      turbotlib (~> 0.0.8)
+
+GIT
+  remote: git://github.com/OpenAddressesUK/turbot-runner.git
+  revision: 42e7dca653bf29e5bf1de5bd4c9499d1e4fe86cc
+  specs:
+    turbot-runner (0.1.27)
+      openc-json_schema (= 0.0.5)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.1.4)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
+    addressable (2.3.7)
+    coderay (1.1.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
+    diff-lcs (1.2.5)
+    excon (0.44.4)
+    httparty (0.13.1)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    httpclient (2.6.0.1)
+    i18n (0.7.0)
+    json (1.8.2)
+    json-schema (2.5.1)
+      addressable (~> 2.3.7)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    method_source (0.8.2)
+    mime-types (1.25.1)
+    mini_portile (0.6.0)
+    minitest (5.5.1)
+    multi_xml (0.5.5)
+    netrc (0.7.9)
+    nokogiri (1.6.2.1)
+      mini_portile (= 0.6.0)
+    openc-json_schema (0.0.5)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    rdoc (4.2.0)
+      json (~> 1.4)
+    rest-client (1.6.8)
+      mime-types (~> 1.16)
+      rdoc (>= 2.4.2)
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
+    rspec-core (3.2.2)
+      rspec-support (~> 3.2.0)
+    rspec-expectations (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-mocks (3.2.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-support (3.2.2)
+    rubyzip (1.1.4)
+    safe_yaml (1.0.4)
+    scraperwiki (3.0.2)
+      httpclient
+      sqlite_magic
+    slop (3.6.0)
+    sqlite3 (1.3.10)
+    sqlite_magic (0.0.3)
+      sqlite3
+    thread_safe (0.3.5)
+    timecop (0.7.3)
+    turbotlib (0.0.8)
+      scraperwiki (= 3.0.2)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    vcr (2.9.3)
+    webmock (1.20.4)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  httparty (= 0.13.1)
+  nokogiri (= 1.6.2.1)
+  openc-schema!
+  pry
+  rspec
+  rubyzip (= 1.1.4)
+  timecop
+  turbot!
+  turbot-api!
+  turbot-runner!
+  vcr
+  webmock
