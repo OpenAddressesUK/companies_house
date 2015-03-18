@@ -113,6 +113,7 @@ class CompaniesHouse
     tries = 1
     begin
       response = HTTParty.post(url, body: {address: address})
+      raise StandardError if response.code != 200
     rescue
       retry_secs = 5 * tries
       Turbotlib.log("Retrying in #{retry_secs} seconds.")
@@ -120,6 +121,7 @@ class CompaniesHouse
       tries += 1
       retry
     end
+
     JSON.parse(response.body)
   end
 

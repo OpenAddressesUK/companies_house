@@ -9,7 +9,7 @@ describe CompaniesHouse do
   it "parses an address from a CSV row correctly" do
     stub_request(:post, "http://sorting-office.openaddressesuk.org/address").
       with(:body => "address=10%20DOWNING%20STREET%2C%20%2C%20LONDON%2C%20SW1A%202AA").
-      to_return(body: File.open(File.join("spec", "fixtures", "sorting-office.json")))
+      to_return(body: File.read(File.join("spec", "fixtures", "sorting-office.json")))
 
       allow(@companies_house).to receive(:build_provenance) { nil }
 
@@ -52,6 +52,19 @@ describe CompaniesHouse do
     expect(prov[:activity][:derived_from][1][:downloaded_at]).to eq(DateTime.parse("2014-01-01 16:20:00"))
 
     Timecop.return
+  end
+
+  it "retries requests to sorting office if there's a temporary issue" do
+    stub_request(:post, "http://sorting-office.openaddressesuk.org/address").
+      with(:body => "address=10%20DOWNING%20STREET%2C%20%2C%20LONDON%2C%20SW1A%202AA").
+      to_return(status: 404, body: "").times(3).then.
+      to_return(body: File.read(File.join("spec", "fixtures", "sorting-office.json")))
+
+    allow(@companies_house).to receive(:sleep) { nil }
+
+    response = @companies_house.request_with_retries("http://sorting-office.openaddressesuk.org/address", "10 DOWNING STREET, , LONDON, SW1A 2AA")
+
+    expect(response).to eq(JSON.parse(File.read(File.join("spec", "fixtures", "sorting-office.json"))))
   end
 
 end
