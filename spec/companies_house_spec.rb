@@ -67,4 +67,14 @@ describe CompaniesHouse do
     expect(response).to eq(JSON.parse(File.read(File.join("spec", "fixtures", "sorting-office.json"))))
   end
 
+  it "doesn't retry if the error is 400" do
+    stub_request(:post, "http://sorting-office.openaddressesuk.org/address").
+      with(:body => "address=10%20DOWNING%20STREET%2C%20%2C%20LONDON%2C%20SW1A%202AA").
+      to_return(status: 400, body: "{\"error\": \"We couldn't detect a postcode in your address. Please resubmit with a valid postcode.\"}")
+
+    expect(@companies_house).to_not receive(:sleep)
+
+    @companies_house.request_with_retries("http://sorting-office.openaddressesuk.org/address", "10 DOWNING STREET, , LONDON, SW1A 2AA")
+  end
+
 end
