@@ -1,3 +1,8 @@
 language: ruby
 rvm:
-- 1.9.3-p545 # The version used by Turbot
+- 1.9.3-p545
+env:
+  global:
+    secure: gMgszP6imNpjE5ILVK8rZvuzVxzbOfCXIm8XZnBpuaz76J/CUzlopzxvFrkIzXAHv6o14V4CIF8wzcvY0qc4KfsBiDtlu2L3OutiQ2HuAzIUqH/t03KZVAZtZF0qDtVBQAARyWC+2kWN5YhZp7QbzmFiEz1IG04XZO8OJuJk3WY=
+after_success:
+  - rake deploy
