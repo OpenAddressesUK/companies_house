@@ -61,7 +61,7 @@ class CompaniesHouse
       row["RegAddress.PostCode"]
     ].join(", ")
     response = request_with_retries("http://sorting-office.openaddressesuk.org/address", address)
-    unless response["error"] || response["street"].nil? || response["town"].nil? || response["paon"].nil?
+    unless response.nil? || response["error"] || response["street"].nil? || response["town"].nil? || response["paon"].nil?
       json = build_address(response, row["IncorporationDate"])
       puts JSON.dump(json)
     end
@@ -111,19 +111,23 @@ class CompaniesHouse
   end
 
   def request_with_retries(url, address)
-    tries = 1
+    tries = 0
     begin
       response = HTTParty.post(url, body: {address: address})
       raise StandardError if ![200,400].include?(response.code)
+      JSON.parse(response.body)
     rescue
+      tries += 1
+      Turbotlib.log("Address #{address} caused explosion")
       retry_secs = 5 * tries
       Turbotlib.log("Retrying in #{retry_secs} seconds.")
-      sleep(retry_secs)
-      tries += 1
-      retry
+      if tries < 5
+        sleep(retry_secs)
+        retry
+      else
+        Turbotlib.log("Giving up")
+      end
     end
-
-    JSON.parse(response.body)
   end
 
   def current_sha
