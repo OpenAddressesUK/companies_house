@@ -19,7 +19,8 @@ describe CompaniesHouse do
       "RegAddress.PostTown" => "LONDON",
       "RegAddress.County" => "",
       "RegAddress.Country" => "",
-      "RegAddress.PostCode" => "SW1A 2AA"
+      "RegAddress.PostCode" => "SW1A 2AA",
+      "IncorporationDate" => "11/09/2012"
     }
 
     expected = {
@@ -29,6 +30,7 @@ describe CompaniesHouse do
       locality: nil,
       town: "London",
       postcode: "SW1A 2AA",
+      valid_at: DateTime.parse("2012-09-11T00:00:00"),
       provenance: nil
     }.to_json
 

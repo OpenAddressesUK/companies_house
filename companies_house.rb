@@ -62,12 +62,12 @@ class CompaniesHouse
     ].join(", ")
     response = request_with_retries("http://sorting-office.openaddressesuk.org/address", address)
     unless response["error"] || response["street"].nil? || response["town"].nil? || response["paon"].nil?
-      json = build_address(response)
+      json = build_address(response, row["IncorporationDate"])
       puts JSON.dump(json)
     end
   end
 
-  def build_address(response)
+  def build_address(response, date)
     {
       saon: response["saon"],
       paon: response["paon"],
@@ -75,7 +75,8 @@ class CompaniesHouse
       locality: response["locality"].nil? ? nil : response["locality"]["name"],
       town: response["town"]["name"],
       postcode: response["postcode"]["name"],
-      provenance: build_provenance(response)
+      valid_at: DateTime.parse(date),
+      provenance: build_provenance(response),
     }
   end
 
