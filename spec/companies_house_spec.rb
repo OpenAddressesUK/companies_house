@@ -20,7 +20,9 @@ describe CompaniesHouse do
       "RegAddress.County" => "",
       "RegAddress.Country" => "",
       "RegAddress.PostCode" => "SW1A 2AA",
-      "IncorporationDate" => "11/09/2012"
+      "IncorporationDate" => "11/09/2010",
+      "Returns.LastMadeUpDate" => "11/09/2011",
+      "Accounts.LastMadeUpDate" => "11/09/2012"
     }
 
     expected = {
