@@ -20,5 +20,6 @@ task :deploy do
       writer.puts('y')
       puts reader.gets
     end
+    sleep 5
   end
 end
