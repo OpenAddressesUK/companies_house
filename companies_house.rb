@@ -4,6 +4,8 @@ require 'nokogiri'
 require 'zip'
 require 'httparty'
 
+class HTTParty::Basement; default_timeout 120; end
+
 class CompaniesHouse
 
   ROOT_DOMAIN = "http://download.companieshouse.gov.uk"
