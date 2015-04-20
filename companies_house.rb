@@ -140,14 +140,14 @@ class CompaniesHouse
       JSON.parse(response.body)
     rescue
       tries += 1
-      Turbotlib.log("Address #{address} caused explosion")
+      Turbotlib.log("#{Time.now.xmlschema}: Address #{address} caused explosion")
       retry_secs = 5 * tries
-      Turbotlib.log("Retrying in #{retry_secs} seconds.")
+      Turbotlib.log("#{Time.now.xmlschema}: Retrying in #{retry_secs} seconds.")
       if tries < 5
         sleep(retry_secs)
         retry
       else
-        Turbotlib.log("Giving up")
+        Turbotlib.log("#{Time.now.xmlschema}: Giving up")
       end
     end
   end

@@ -85,13 +85,13 @@ describe CompaniesHouse do
       with(:body => "address=10%20DOWNING%20STREET%2C%20%2C%20LONDON%2C%20SW1A%202AA").
       to_return(status: 404, body: "")
 
-    expect(Turbotlib).to receive(:log).with("Address 10 DOWNING STREET, , LONDON, SW1A 2AA caused explosion").at_least(5).times
-    expect(Turbotlib).to receive(:log).with("Retrying in 5 seconds.")
-    expect(Turbotlib).to receive(:log).with("Retrying in 10 seconds.")
-    expect(Turbotlib).to receive(:log).with("Retrying in 15 seconds.")
-    expect(Turbotlib).to receive(:log).with("Retrying in 20 seconds.")
-    expect(Turbotlib).to receive(:log).with("Retrying in 25 seconds.")
-    expect(Turbotlib).to receive(:log).with("Giving up")
+    expect(Turbotlib).to receive(:log).with(/Address 10 DOWNING STREET, , LONDON, SW1A 2AA caused explosion/).at_least(5).times
+    expect(Turbotlib).to receive(:log).with(/Retrying in 5 seconds./)
+    expect(Turbotlib).to receive(:log).with(/Retrying in 10 seconds./)
+    expect(Turbotlib).to receive(:log).with(/Retrying in 15 seconds./)
+    expect(Turbotlib).to receive(:log).with(/Retrying in 20 seconds./)
+    expect(Turbotlib).to receive(:log).with(/Retrying in 25 seconds./)
+    expect(Turbotlib).to receive(:log).with(/Giving up/)
     allow(@companies_house).to receive(:sleep) { nil }
 
     response = @companies_house.request_with_retries("http://sorting-office.openaddressesuk.org/address", "10 DOWNING STREET, , LONDON, SW1A 2AA")
