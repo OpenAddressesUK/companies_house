@@ -48,19 +48,31 @@ class CompaniesHouse
   end
 
   def parse_csv(filename)
-    CSV.foreach(filename, headers: true) do |row|
-      if row["RegAddress.PostCode"]
-        parse_address(row)
+    n = 1
+    File.foreach(filename) do |line|
+      if n == 1
+        n += 1
+        next
       end
+      begin
+        CSV.parse(line) do |row|
+          if row[9]
+            parse_address(row)
+          end
+        end
+      rescue CSV::MalformedCSVError => e
+        Turbotlib.log("Bad line found at line #{n} - #{line}")
+      end
+      n += 1
     end
   end
 
   def parse_address(row)
     address = [
-      row["RegAddress.AddressLine1"],
-      row["RegAddress.AddressLine2"],
-      row["RegAddress.PostTown"],
-      row["RegAddress.PostCode"]
+      row[4],
+      row[5],
+      row[6],
+      row[9]
     ].join(", ")
     response = request_with_retries("http://sorting-office.openaddressesuk.org/address", address)
     unless response.nil? || response["error"] || response["street"].nil? || response["town"].nil? || response["paon"].nil?
@@ -84,9 +96,9 @@ class CompaniesHouse
 
   def valid_at_date(row)
     [
-      row["IncorporationDate"],
-      row["Returns.LastMadeUpDate"],
-      row["Accounts.LastMadeUpDate"]
+      row[14],
+      row[21],
+      row[18]
     ].map! { |d| DateTime.parse(d) rescue nil }.reject {|d| d.nil?}.sort.last
   end
 

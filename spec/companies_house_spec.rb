@@ -14,15 +14,15 @@ describe CompaniesHouse do
       allow(@companies_house).to receive(:build_provenance) { nil }
 
     row = {
-      "RegAddress.AddressLine1" => "10 DOWNING STREET",
-      "RegAddress.AddressLine2" => "",
-      "RegAddress.PostTown" => "LONDON",
-      "RegAddress.County" => "",
-      "RegAddress.Country" => "",
-      "RegAddress.PostCode" => "SW1A 2AA",
-      "IncorporationDate" => "11/09/2010",
-      "Returns.LastMadeUpDate" => "11/09/2011",
-      "Accounts.LastMadeUpDate" => "11/09/2012"
+      4 => "10 DOWNING STREET",
+      5 => "",
+      6 => "LONDON",
+      7 => "",
+      8 => "",
+      9 => "SW1A 2AA",
+      14 => "11/09/2010",
+      18 => "11/09/2011",
+      21 => "11/09/2012"
     }
 
     expected = {
@@ -37,6 +37,15 @@ describe CompaniesHouse do
     }.to_json
 
     expect { @companies_house.parse_address(row) }.to output(expected + "\n").to_stdout
+  end
+
+  it "doesn't crap out on a bad CSV" do
+    filename = File.join("spec", "fixtures", "bad.csv")
+
+    expect(@companies_house).to receive(:parse_address).exactly(15).times
+    expect(Turbotlib).to receive(:log).with(/Bad line found at line 5 \- "TOTS2TEENS LTD"/)
+
+    @companies_house.parse_csv(filename)
   end
 
   it "creates the correct provenance" do
